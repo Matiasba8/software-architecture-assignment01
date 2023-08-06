@@ -20,9 +20,15 @@ defmodule Assignment01Web.Router do
     resources "/books", BookController
     resources "/sales", SaleController
     resources "/reviews", ReviewController
+    resources "/model_statistic", ModelStatisticController, only: [:index]
     get "/", PageController, :home
   end
 
+  scope "/model_statistic", Assignment01Web do
+    pipe_through :browser
+    # Ruta existente
+    get "/statistics_01", ModelStatisticController, :statistics_01
+  end
   # Other scopes may use custom stacks.
   # scope "/api", Assignment01Web do
   #   pipe_through :api

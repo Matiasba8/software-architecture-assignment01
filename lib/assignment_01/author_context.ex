@@ -5,7 +5,6 @@ defmodule Assignment01.AuthorContext do
 
   import Ecto.Query, warn: false
   alias Assignment01.Repo
-
   alias Assignment01.AuthorContext.Author
 
   @doc """

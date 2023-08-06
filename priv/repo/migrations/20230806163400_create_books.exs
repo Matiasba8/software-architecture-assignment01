@@ -7,8 +7,11 @@ defmodule Assignment01.Repo.Migrations.CreateBooks do
       add :summary, :string
       add :date_of_publication, :date
       add :price, :decimal
+      add :author_id, references(:authors, on_delete: :nothing)
 
       timestamps()
     end
+
+    create index(:books, [:author_id])
   end
 end

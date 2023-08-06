@@ -7,6 +7,7 @@ defmodule Assignment01.BookContext.Book do
     field :summary, :string
     field :date_of_publication, :date
     field :price, :decimal
+    field :author_id, :id
 
     timestamps()
   end
