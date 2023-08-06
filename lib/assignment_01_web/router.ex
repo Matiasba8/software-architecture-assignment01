@@ -16,7 +16,10 @@ defmodule Assignment01Web.Router do
 
   scope "/", Assignment01Web do
     pipe_through :browser
-
+    resources "/authors", AuthorController
+    resources "/books", BookController
+    resources "/sales", SaleController
+    resources "/reviews", ReviewController
     get "/", PageController, :home
   end
 
