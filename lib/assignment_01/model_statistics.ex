@@ -59,5 +59,7 @@ defmodule Assignment01.ModelStatisticContext do
     IO.puts("---------RESULT---------------")
     IO.inspect(results)
     IO.puts("------------------------")
+
+    results
   end
 end

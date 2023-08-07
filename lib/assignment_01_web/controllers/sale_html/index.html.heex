@@ -8,6 +8,7 @@
 </.header>
 
 <.table id="sales" rows={@sales} row_click={&JS.navigate(~p"/sales/#{&1}")}>
+  <:col :let={sale} label="Book ID"><%= sale.book_id %></:col>
   <:col :let={sale} label="Date of sale"><%= sale.date_of_sale %></:col>
   <:col :let={sale} label="Quantity sold"><%= sale.quantity_sold %></:col>
   <:action :let={sale}>

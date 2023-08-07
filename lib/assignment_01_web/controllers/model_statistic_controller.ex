@@ -15,8 +15,8 @@ defmodule Assignment01Web.ModelStatisticController do
 
   def statistics_01(conn, _params) do
 
-    authors_data = ModelStatisticContext.list_stats_01_table()
+    statistic_01_data = ModelStatisticContext.list_stats_01_table()
 
-    render(conn, "statistics_01.html")
+    render(conn, :index, data: statistic_01_data)
   end
 end
