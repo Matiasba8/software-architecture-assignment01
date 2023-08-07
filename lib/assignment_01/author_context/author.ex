@@ -3,6 +3,7 @@ defmodule Assignment01.AuthorContext.Author do
   import Ecto.Changeset
 
   schema "authors" do
+    has_many :books, Assignment01.BookContext.Book
     field :name, :string
     field :date_of_birth, :date
     field :country_of_origin, :string

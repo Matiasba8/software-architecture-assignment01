@@ -2,6 +2,7 @@
   <.error :if={@changeset.action}>
     Oops, something went wrong! Please check the errors below.
   </.error>
+  <.input field={f[:author_id]} type="number" label="Author ID" />
   <.input field={f[:name]} type="text" label="Name" />
   <.input field={f[:summary]} type="text" label="Summary" />
   <.input field={f[:date_of_publication]} type="date" label="Date of publication" />

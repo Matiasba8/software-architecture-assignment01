@@ -10,31 +10,44 @@ defmodule Assignment01.ModelStatisticContext do
 
   def list_stats_01_table do
 
+    # book counter query
     # authors_data = from author in Author,
     #             join: book in assoc(author, :books),
-    #             select: %{book_id: book.id, author_id: ^author.id, author_name: author.name, book_count: count(book.id)},
+    #             select: %{author_id: author.id, author_name: author.name, book_count: count(book.id)},
     #             group_by: [author.id, author.name]
 
-    # books = from book in Book, select: book.author_id
+
+    #avg score
+    authors_data = from author in Author,
+                join: book in assoc(author, :books),
+                select: %{author_id: author.id, author_name: author.name }
+
+    #total_Sales
+
+    #Test
+    books = from book in Book, select: %{author_id: book.author_id, book_id: book.id}
 
 
-    # books = Repo.all(books)
-    # for book <- books do
-    #   IO.puts("Book author id: #{book}")
-    # end
+    books = Repo.all(books)
+    for book <- books do
+      IO.puts("Book author id: #{book[:author_id]}, book_id: #{book[:book_id]}")
+    end
 
-    # authors_data = Repo.all(authors_data)
-
-
-    # for dict <- authors_data do
-    #   IO.puts("Author name: #{dict[:name]}")
-    # end
-
-    # IO.puts("------------------------")
-    # IO.inspect(authors_data)
-    # IO.puts("------------------------")
+    authors_data = Repo.all(authors_data)
 
 
-    # authors_data
+    for dict <- authors_data do
+      IO.puts("Author name: #{dict[:name]}")
+    end
+
+    IO.puts("---------BOOKS---------------")
+    IO.inspect(books)
+    IO.puts("------------------------")
+
+    IO.puts("---------BOOKS---------------")
+    IO.inspect(authors_data)
+    IO.puts("------------------------")
+
+    books
   end
 end

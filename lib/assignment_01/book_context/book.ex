@@ -15,7 +15,7 @@ defmodule Assignment01.BookContext.Book do
   @doc false
   def changeset(book, attrs) do
     book
-    |> cast(attrs, [:name, :summary, :date_of_publication, :price])
-    |> validate_required([:name, :summary, :date_of_publication, :price])
+    |> cast(attrs, [:name, :summary, :date_of_publication, :price, :author_id])
+    |> validate_required([:name, :summary, :date_of_publication, :price, :author_id])
   end
 end
