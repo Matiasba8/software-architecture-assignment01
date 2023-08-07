@@ -3,11 +3,15 @@ defmodule Assignment01.BookContext.Book do
   import Ecto.Changeset
 
   schema "books" do
+    has_many :reviews, Assignment01.ReviewContext.Review
+    has_many :sales, Assignment01.SaleContext.Sale
+    belongs_to :author, Assignment01.AuthorContext.Author
+
+
     field :name, :string
     field :summary, :string
     field :date_of_publication, :date
     field :price, :decimal
-    field :author_id, :id
 
     timestamps()
   end

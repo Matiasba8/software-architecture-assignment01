@@ -3,10 +3,10 @@ defmodule Assignment01.ReviewContext.Review do
   import Ecto.Changeset
 
   schema "reviews" do
+    belongs_to :book, Assignment01.BookContext.Book
     field :review, :string
     field :score, :integer
     field :number_of_upvotes, :integer
-    field :book_id, :id
 
     timestamps()
   end
@@ -14,7 +14,7 @@ defmodule Assignment01.ReviewContext.Review do
   @doc false
   def changeset(review, attrs) do
     review
-    |> cast(attrs, [:review, :score, :number_of_upvotes])
-    |> validate_required([:review, :score, :number_of_upvotes])
+    |> cast(attrs, [:review, :score, :number_of_upvotes, :book_id])
+    |> validate_required([:review, :score, :number_of_upvotes, :book_id])
   end
 end
