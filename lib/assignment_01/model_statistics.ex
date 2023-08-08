@@ -114,7 +114,6 @@ defmodule Assignment01.ModelStatisticContext do
   end
 
   def top_10_rated_books do
-    # Calcula el promedio de los ratings para cada libro y ordénalos en orden descendente.
     avg_ratings_query =
       from book in Book,
         left_join: review in assoc(book, :reviews),
