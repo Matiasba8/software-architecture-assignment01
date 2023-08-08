@@ -8,13 +8,13 @@ defmodule Assignment01.ModelStatisticContext do
   alias Assignment01.AuthorContext.Author
   alias Assignment01.ReviewContext.Review
 
-  def list_stats_01_table do
+  def list_stats_01_table(description) do
 
     # book counter query
     books_counter = from author in Author,
                 left_join: book in assoc(author, :books),
-                select: %{author_id: author.id, author_name: author.name, book_count: count(book.id)},
-                group_by: [author.id, author.name]
+                select: %{author_id: author.id, author_name: author.name, book_count: count(book.id), book_description: book.summary},
+                group_by: [author.id, author.name, book.summary]
 
 
     #avg score
@@ -34,7 +34,14 @@ defmodule Assignment01.ModelStatisticContext do
     combined_query = from bc in subquery(books_counter),
       left_join: ts in subquery(total_sales), on: bc.author_id == ts.author_id,
       left_join: as in subquery(avg_score), on: bc.author_id == as.author_id,
-      select: %{author_name: bc.author_name, book_count: bc.book_count, avg_score: as.avg_score, total_sales: ts.total_sales}
+      select: %{author_name: bc.author_name, book_count: bc.book_count, avg_score: as.avg_score, total_sales: ts.total_sales, book_description: bc.book_description}
+
+    if description != nil do
+      IO.puts("combined query executes")
+      combined_query = from cq in subquery(combined_query),
+                       where: ilike(cq.book_description, ^"%#{description}%")
+
+    end
 
     results = Repo.all(combined_query)
     books_counter = Repo.all(books_counter)
@@ -118,13 +125,13 @@ defmodule Assignment01.ModelStatisticContext do
     # Calcula el promedio de los ratings para cada libro y ordénalos en orden descendente.
     avg_ratings_query =
       from book in Book,
-        join: review in assoc(book, :reviews),
+        left_join: review in assoc(book, :reviews),
         group_by: book.id,
         select: %{book_id: book.id, avg_rating: avg(review.score)}
 
     top_rated_query =
       from avg_r in subquery(avg_ratings_query),
-        join: book in Book, on: book.id == avg_r.book_id,
+        left_join: book in Book, on: book.id == avg_r.book_id,
         order_by: [desc: avg_r.avg_rating],
         select: %{book_id: book.id, avg_rating: avg_r.avg_rating, book_name: book.name},
         limit: 10

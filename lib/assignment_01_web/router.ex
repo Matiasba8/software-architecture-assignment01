@@ -28,6 +28,7 @@ defmodule Assignment01Web.Router do
     pipe_through :browser
     # Ruta existente
     get "/statistics_01", ModelStatisticController, :statistics_01
+    post "/statistics_01_post", ModelStatisticController, :statistics_01_post, csrf: false
     get "/top_50_selling_books", ModelStatisticController, :top_50_selling_books
     get "/top_10_rated_books", ModelStatisticController, :top_10_rated_books
   end

@@ -2,8 +2,8 @@ import Config
 
 # Configure your database
 config :assignment_01, Assignment01.Repo,
-  username: "diego",
-  password: "12345678",
+  username: "mati",
+  password: "1234",
   hostname: "localhost",
   database: "assignment_01_dev",
   stacktrace: true,

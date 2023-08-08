@@ -2,6 +2,15 @@
   Listing Models statistics
 </.header>
 
+<form action="/model_statistic/statistics_01_post" method="post">
+  <input type="hidden" name="csrf_token " value={@csrf_token}>
+
+  <input type="text" name="search" placeholder="Search by description">
+  <button type="submit">Search</button>
+</form>
+
+
+
 <.table id="models_statistics" rows={@data}>
   <:col :let={data} label="Author Name"><%= data.author_name %></:col>
   <:col :let={data} label="Book Count"><%= data.book_count || 0%></:col>
