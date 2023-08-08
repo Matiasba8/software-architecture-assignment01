@@ -17,10 +17,15 @@ defmodule Assignment01.BookContext do
       [%Book{}, ...]
 
   """
-  def list_books do
-    Repo.all(Book)
+  def list_books(description) do
+    query = from book in Book,
+            where: ilike(book.summary, ^"%#{description}%")
+    Repo.all(query)
   end
 
+  def list_all_books() do
+    Repo.all(Book)
+  end
   @doc """
   Gets a single book.
 

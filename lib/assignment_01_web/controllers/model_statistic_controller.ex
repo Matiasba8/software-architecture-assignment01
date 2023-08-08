@@ -8,23 +8,18 @@ defmodule Assignment01Web.ModelStatisticController do
   end
 
   def statistics_01(conn, _params) do
-
-
-    csrf_token = get_csrf_token()
-
-    IO.puts("**********Parameters***********")
-    IO.puts(_params[:search_by_book_description])
-    IO.puts("*********************")
-
     statistic_01_data = ModelStatisticContext.list_stats_01_table(nil)
 
-    render(conn, :index, data: statistic_01_data, csrf_token: csrf_token)
+    render(conn, :index, data: statistic_01_data, action: "/model_statistic/statistics_01_post")
   end
 
   #POST
-  def statistics_01_post(conn, _params) do
+  def statistics_01_post(conn, %{"search" => search}) do
 
-    statistic_01_data = ModelStatisticContext.list_stats_01_table(nil)
+    IO.puts("**********Parameters***********")
+    IO.puts(search)
+    IO.puts("*********************")
+    statistic_01_data = ModelStatisticContext.list_stats_01_table(search)
 
     render(conn, :index, data: statistic_01_data)
   end

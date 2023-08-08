@@ -36,12 +36,9 @@ defmodule Assignment01.ModelStatisticContext do
       left_join: as in subquery(avg_score), on: bc.author_id == as.author_id,
       select: %{author_name: bc.author_name, book_count: bc.book_count, avg_score: as.avg_score, total_sales: ts.total_sales, book_description: bc.book_description}
 
-    if description != nil do
-      IO.puts("combined query executes")
-      combined_query = from cq in subquery(combined_query),
-                       where: ilike(cq.book_description, ^"%#{description}%")
-
-    end
+    #Search filter
+    # combined_query = from cq in subquery(combined_query),
+    #                  where: ilike(cq.book_description, ^."%#{description || ""}%")
 
     results = Repo.all(combined_query)
     books_counter = Repo.all(books_counter)
@@ -60,11 +57,6 @@ defmodule Assignment01.ModelStatisticContext do
 
     IO.puts("---------total_sales---------------")
     IO.inspect(total_sales)
-    IO.puts("------------------------")
-
-
-    IO.puts("---------RESULT---------------")
-    IO.inspect(results)
     IO.puts("------------------------")
 
     results

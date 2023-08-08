@@ -6,7 +6,6 @@ defmodule Assignment01Web.Router do
     plug :fetch_session
     plug :fetch_live_flash
     plug :put_root_layout, html: {Assignment01Web.Layouts, :root}
-    plug :protect_from_forgery
     plug :put_secure_browser_headers
   end
 
@@ -24,9 +23,13 @@ defmodule Assignment01Web.Router do
     get "/", PageController, :home
   end
 
+  scope "/books", Assignment01Web do
+    pipe_through :browser
+    post "/books_search_by_description", BookController, :books_search_by_description
+  end
+
   scope "/model_statistic", Assignment01Web do
     pipe_through :browser
-    # Ruta existente
     get "/statistics_01", ModelStatisticController, :statistics_01
     post "/statistics_01_post", ModelStatisticController, :statistics_01_post, csrf: false
     get "/top_50_selling_books", ModelStatisticController, :top_50_selling_books

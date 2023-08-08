@@ -4,9 +4,15 @@ defmodule Assignment01Web.BookController do
   alias Assignment01.BookContext
   alias Assignment01.BookContext.Book
 
-  def index(conn, _params) do
-    books = BookContext.list_books()
+
+  def books_search_by_description(conn, %{"search" => search}) do
+    books = BookContext.list_books(search)
     render(conn, :index, books: books)
+  end
+  def index(conn, _params) do
+    books = BookContext.list_all_books()
+
+    render(conn, "index.html", books: books)
   end
 
   def new(conn, _params) do
