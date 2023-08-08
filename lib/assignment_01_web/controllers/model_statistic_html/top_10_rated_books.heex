@@ -6,12 +6,15 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>Rating</th>
+
     </tr>
   </thead>
   <tbody>
     <%= for item <- @top_10_rated_books do %>
       <tr>
         <td><%= item.book_name %></td>
+        <td><%= item.avg_rating %></td>
       </tr>
     <% end %>
   </tbody>
