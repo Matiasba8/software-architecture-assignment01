@@ -1,0 +1,31 @@
+<.header>
+  Listing Models statistics
+</.header>
+
+<table>
+  <thead>
+    <tr>
+      <th>Book ID</th>
+      <th>Book Sales</th>
+      <th>Author Total Sales</th>
+      <th>Publication Year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% count = 0 %>
+    <%= for item <- @top_50_selling_books do %>
+      <tr>
+        
+        <td><%= item.book_id %></td>
+        <td><%= item.book_sales || 0 %></td>
+        <td><%=  item.author_total_sales || 0 %></td>
+
+        <%= if count == 0 do %>
+          <td><%= item.publication_year %></td>
+        <% end %>
+        
+        <% count = count + 1 %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

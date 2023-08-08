@@ -8,6 +8,7 @@
 </.header>
 
 <.table id="authors" rows={@authors} row_click={&JS.navigate(~p"/authors/#{&1}")}>
+  <:col :let={author} label="ID"><%= author.id %></:col>
   <:col :let={author} label="Name"><%= author.name %></:col>
   <:col :let={author} label="Date of birth"><%= author.date_of_birth %></:col>
   <:col :let={author} label="Country of origin"><%= author.country_of_origin %></:col>

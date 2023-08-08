@@ -5,7 +5,7 @@ defmodule Assignment01.Repo.Migrations.CreateSales do
     create table(:sales) do
       add :date_of_sale, :date
       add :quantity_sold, :integer
-      add :book_id, references(:books, on_delete: :nothing)
+      add :book_id, references(:books, on_delete: :delete_all)
 
       timestamps()
     end

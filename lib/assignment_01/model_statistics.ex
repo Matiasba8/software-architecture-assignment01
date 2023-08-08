@@ -27,7 +27,7 @@ defmodule Assignment01.ModelStatisticContext do
     total_sales = from book in Book,
       left_join: sale in assoc(book, :sales),
       group_by: book.author_id,
-      select: %{author_id: book.author_id, total_sales: sum(sale.quantity_sold * book.price)}
+      select: %{author_id: book.author_id, total_sales: sum(sale.quantity_sold)}
 
 
     # Combine the results
@@ -61,5 +61,56 @@ defmodule Assignment01.ModelStatisticContext do
     IO.puts("------------------------")
 
     results
+  end
+
+  def top_50_selling_books do
+    #total_Sales
+    ts_grouped_by_book =
+      from(book in Book,
+        left_join: sale in assoc(book, :sales),
+        group_by: book.id,
+        select: %{
+          book_id: book.id,
+          author_id: book.author_id,
+          total_sales: sum(sale.quantity_sold),
+          publication_year: fragment("extract(year from ?)", book.date_of_publication)
+        },
+        limit: 50)
+
+    #total_Sales
+    ts_grouped_by_author = from book in Book,
+      left_join: sale in assoc(book, :sales),
+      group_by: book.author_id,
+      select: %{author_id: book.author_id, total_sales: sum(sale.quantity_sold)}
+
+
+    combined_query = from tsgb_book in subquery(ts_grouped_by_book),
+                      left_join: tsgb_author in subquery(ts_grouped_by_author), on: tsgb_author.author_id == tsgb_book.author_id,
+                      select: %{book_id: tsgb_book.book_id, author_id: tsgb_book.author_id, book_sales: tsgb_book.total_sales, publication_year: tsgb_book.publication_year, author_total_sales: tsgb_author.total_sales},
+                      order_by: [desc: tsgb_book.total_sales]
+
+
+    combined_query = Repo.all(combined_query)
+    ts_grouped_by_book = Repo.all(ts_grouped_by_book)
+    ts_grouped_by_author = Repo.all(ts_grouped_by_author)
+    # Repo.all(combined_query)
+
+    IO.puts("---------ts_grouped_by_book---------------")
+    IO.inspect(ts_grouped_by_book)
+    IO.puts("------------------------")
+
+    IO.puts("---------ts_grouped_by_author---------------")
+    IO.inspect(ts_grouped_by_author)
+    IO.puts("------------------------")
+
+    IO.puts("---------result---------------")
+    IO.inspect(combined_query)
+    IO.puts("------------------------")
+
+    IO.puts("*******************")
+    IO.inspect(combined_query)
+    IO.puts("*******************")
+
+    combined_query
   end
 end

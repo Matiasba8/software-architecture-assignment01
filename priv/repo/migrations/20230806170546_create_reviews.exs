@@ -6,7 +6,7 @@ defmodule Assignment01.Repo.Migrations.CreateReviews do
       add :review, :string
       add :score, :integer
       add :number_of_upvotes, :integer
-      add :book_id, references(:books, on_delete: :nothing)
+      add :book_id, references(:books, on_delete: :delete_all)
 
       timestamps()
     end
