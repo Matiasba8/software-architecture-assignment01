@@ -113,4 +113,28 @@ defmodule Assignment01.ModelStatisticContext do
 
     combined_query
   end
+
+  def top_10_rated_books do
+    # Calcula el promedio de los ratings para cada libro y ordénalos en orden descendente.
+    avg_ratings_query =
+      from book in Book,
+        join: review in assoc(book, :reviews),
+        group_by: book.id,
+        select: %{book_id: book.id, avg_rating: avg(review.score)}
+
+    top_rated_query =
+      from avg_r in subquery(avg_ratings_query),
+        join: book in Book, on: book.id == avg_r.book_id,
+        order_by: [desc: avg_r.avg_rating],
+        select: %{book_id: book.id, avg_rating: avg_r.avg_rating, book_name: book.name},
+        limit: 10
+
+    top_rated_books = Repo.all(top_rated_query)
+
+    IO.puts("---------Top Rated Books---------------")
+    IO.inspect(top_rated_books)
+    IO.puts("----------------------------------------")
+
+    top_rated_books
+  end
 end

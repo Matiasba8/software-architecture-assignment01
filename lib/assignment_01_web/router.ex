@@ -29,6 +29,7 @@ defmodule Assignment01Web.Router do
     # Ruta existente
     get "/statistics_01", ModelStatisticController, :statistics_01
     get "/top_50_selling_books", ModelStatisticController, :top_50_selling_books
+    get "/top_10_rated_books", ModelStatisticController, :top_10_rated_books
   end
   # Other scopes may use custom stacks.
   # scope "/api", Assignment01Web do

@@ -20,4 +20,11 @@ defmodule Assignment01Web.ModelStatisticController do
 
     render(conn, :top_50_selling_books, top_50_selling_books: top_50_selling_books)
   end
+
+  def top_10_rated_books(conn, _params) do
+
+    top_10_rated_books = ModelStatisticContext.top_10_rated_books()
+
+    render(conn, :top_10_rated_books, top_10_rated_books: top_10_rated_books)
+  end
 end
