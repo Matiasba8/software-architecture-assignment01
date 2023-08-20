@@ -1,26 +1,26 @@
-version: "3"
+version: "3.6"
 services:
-  app:
-    build:
-      context: ./phoenix_app
-      dockerfile: Dockerfile
-    container_name: server
-    networks:
-      - my-bridge
+  db:
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_HOST_AUTH_METHOD: trust
+    image: "postgres:11-alpine"
+    restart: always
+    volumes:
+      - "pgdata:/var/lib/postgresql/data"
+  web:
+    build: .
     depends_on:
       - db
-  db:
-    image: postgres
-    ports:
-      - "5432:5432"
     environment:
-      - POSTGRES_DB=assignment_01_dev
-      - POSTGRES_USER=mati
-      - POSTGRES_PASSWORD=1234
-    networks:
-      - my-bridge
-    container_name: db
-
-networks:
-  my-bridge:
-    external: true
+      MIX_ENV: dev
+    env_file:
+      - .env
+    ports:
+      - "4000:4000"
+    volumes:
+      - .:/app
+volumes:
+  pgdata:

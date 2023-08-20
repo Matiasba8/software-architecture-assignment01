@@ -2,14 +2,9 @@ import Config
 
 # Configure your database
 config :assignment_01, Assignment01.Repo,
-  username: "mati",
-  password: "1234",
-  hostname: "db",
-  database: "assignment_01_dev",
-  stacktrace: true,
+  url: System.get_env("DATABASE_URL"),
   show_sensitive_data_on_connection_error: true,
-  pool_size: 10,
-  timeout: 60000
+  pool_size: 10
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
